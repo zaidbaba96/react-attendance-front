@@ -1,0 +1,121 @@
+a {
+    font-weight: bold;
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+input {
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    margin-left: 10px;
+    background-color: #FAFAFA;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+    font-size: 15px;
+    font-weight: bold;
+    transition: transform 150ms ease-in-out;
+}
+
+.themeBtn {
+    cursor: pointer;
+    color: white;
+    transition: transform 150ms ease-in-out;
+}
+
+button:hover, .themeBtn:hover {
+    transform: scale(1.05);
+}
+
+.header, .settings, .shiftTimes, .breaks, .results, .footer {
+    margin: 10px;
+    background-color: #03020a;
+    color: white;
+    border-radius: 15px;
+    transition: ease all 0.25s;
+}
+
+.header {
+    height: 150px;
+}
+
+.shiftTimes {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.results {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.flexItem {
+    width: 550px;
+}
+
+.footer {
+    height: 60px;
+}
+
+@media screen and (max-width: 700px) {
+    .flexItem {
+        width: 85%;
+    }
+}
+.App {
+    font-family: sans-serif;
+    padding-top: 10px;
+    /* text-align: center; */
+  }
+  
+  .rdt_Table {
+    margin-bottom: 1rem;
+  }
+  .rdt_TableRow {
+    background-color: grey;
+  }
+  .rdt_TableCol {
+    color: black;
+    font-weight: bolder;
+  }
+  /* .rdt_TableCol_Sortable {
+  }
+  .rdt_TableCell {
+  } */
+  .rdt_TableHeader {
+    background-color: transparent;
+  }
+  /* .rdt_TableBody {
+  }  
+h3{
+    padding-top: 10px;
+}  
+  .rdt_ExpanderRow {
+  } */
+  
+h3{
+    padding-top: 10px;
+}   
+
+h1{
+    color:#FAFAFA ;
+}
