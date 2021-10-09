@@ -1,7 +1,10 @@
 import React, { useState }  from 'react'
 import './form.css'
+import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 import swal from 'sweetalert';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 const moment = require('moment')
 const Form = ()=>{
@@ -18,6 +21,57 @@ const Form = ()=>{
 
         setEmpData({...empData , [name]:value})
     }
+    const isSameOrBefore = (startTime, endTime) => {
+        return moment(startTime, 'HH:mm').isSameOrBefore(moment(endTime, 'HH:mm'));
+      }
+      
+    const validationSchema = Yup.object().shape({
+
+        name: Yup.string()
+            .required('Name is required'),
+        Date: Yup.string()
+            .required('Date is required'),
+        start_time: Yup.string()
+            .test(
+              'not empty',
+              'Start time cant be empty',
+              function(value) {
+                return !!value;
+              }
+            )
+            .test(
+              "start_time_test",
+              "Start time must be before end time",
+              function(value) {
+                const { end_time } = this.parent;
+                return isSameOrBefore(value, end_time);
+              }
+            ),
+        end_time: Yup.string()
+            .required('logout is required'),
+        start_break: Yup.string()
+            .test(
+              'not empty',
+              'Start Break cant be empty',
+              function(value) {
+                return !!value;
+              }
+            )
+            .test(
+              "start_break_test",
+              "Start Break time must be before end time",
+              function(value) {
+                const { end_time } = this.parent;
+                return isSameOrBefore(value, end_time);
+              }
+            ),
+        end_break: Yup.string()
+            .required('Breakout  is required'),
+    });
+    const formOptions = { resolver: yupResolver(validationSchema) };
+    
+    const { register, handleSubmit, formState } = useForm(formOptions);
+    const { errors } = formState;
  
     const PostData = async (e)=>{
 
@@ -136,18 +190,24 @@ const Form = ()=>{
           <>
           <div className="shiftTimes flexItem">
                 <h3>Employye Name</h3>
-                <input type="text" onChange={handleInputs} name="name" value={empData.name} id="name" list="name_list" />
+                <input type="text" {...register('name')} onChange={handleInputs} name="name" value={empData.name} id="name" list="name_list" />
+                <span>{errors.name?.message}</span>
                 <h3>Date</h3>
-                <input type="date"  name="Date" onChange={handleInputs} value={empData.Date}/><br/>
+                <input type="date"  name="Date"  {...register('Date')} onChange={handleInputs} value={empData.Date}/><br/>
+                <span>{errors.Date?.message}</span>
                 <h3>Shift Times</h3>
                 <form id="shift_times">
-                    <div>Start Time: &nbsp; <input type="time" value={empData.start_time}  onChange={handleInputs} name="start_time" id="start_time" list="times_list" /></div>
+                    <div>Start Time: &nbsp; <input type="time" {...register('start_time')} value={empData.start_time}  onChange={handleInputs} name="start_time" id="start_time" list="times_list" /></div>
+                    <span>{errors.start_time?.message}</span>
                     <h4>Breaks</h4>
-                    <div>Start Break: &nbsp; <input type="time" value={empData.start_break}  onChange={handleInputs} name="start_break" id="start_break" list="times_list" /></div>
+                    <div>Start Break: &nbsp; <input type="time" {...register('start_break')} value={empData.start_break}  onChange={handleInputs} name="start_break" id="start_break" list="times_list" /></div>
+                    <span>{errors.start_break?.message}</span>
                     <br />
-                    <div>End Break: &nbsp; <input type="time" vResultsalue={empData.end_break}  onChange={handleInputs} name="end_break" id="end_break" list="times_list" /></div>
+                    <div>End Break: &nbsp; <input type="time" {...register('end_break')} vResultsalue={empData.end_break}  onChange={handleInputs} name="end_break" id="end_break" list="times_list" /></div>
+                    <span>{errors.end_break?.message}</span>
                     <br />
-                    <div>End Time: &nbsp; <input type="time" value={empData.end_time} onChange={handleInputs} name="end_time" id="end_time" list="times_list" /></div>
+                    <div>End Time: &nbsp; <input type="time" {...register('end_time')} value={empData.end_time} onChange={handleInputs} name="end_time" id="end_time" list="times_list" /></div>
+                    <span>{errors.end_time?.message}</span>
                 </form>
                 <datalist id="times_list">
                     <option value="06:00" />
@@ -190,7 +250,7 @@ const Form = ()=>{
                 {/* <p id="gross_pay">Gross Pay: ${data.totalAmount}</p> */}
                 
 
-                <button onClick={PostData}>
+                <button onClick={handleSubmit(PostData)}>
                     Submit
                 </button>
                 

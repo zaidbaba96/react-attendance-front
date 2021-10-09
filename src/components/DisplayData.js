@@ -94,7 +94,7 @@ useEffect(()=>{
         default:
           return null;
       }
-    });
+    }); 
   };
 console.log(onGridReady);
   return (
