@@ -59,7 +59,7 @@ const Form = ()=>{
             )
             .test(
               "start_break_test",
-              "Start Break time must be before end time",
+              "Start Break time must be before end break",
               function(value) {
                 const { end_time } = this.parent;
                 return isSameOrBefore(value, end_time);
@@ -196,10 +196,10 @@ const Form = ()=>{
                 <input type="date"  name="Date"  {...register('Date')} onChange={handleInputs} value={empData.Date}/><br/>
                 <span>{errors.Date?.message}</span>
                 <h3>Shift Times</h3>
-                <form id="shift_times">
+                <form id="shift_times" onSubmit={handleSubmit(PostData)}>
                     <div>Start Time: &nbsp; <input type="time" {...register('start_time')} value={empData.start_time}  onChange={handleInputs} name="start_time" id="start_time" list="times_list" /></div>
                     <span>{errors.start_time?.message}</span>
-                    <h4>Breaks</h4>
+                    <h3>Breaks</h3>
                     <div>Start Break: &nbsp; <input type="time" {...register('start_break')} value={empData.start_break}  onChange={handleInputs} name="start_break" id="start_break" list="times_list" /></div>
                     <span>{errors.start_break?.message}</span>
                     <br />
@@ -208,7 +208,7 @@ const Form = ()=>{
                     <br />
                     <div>End Time: &nbsp; <input type="time" {...register('end_time')} value={empData.end_time} onChange={handleInputs} name="end_time" id="end_time" list="times_list" /></div>
                     <span>{errors.end_time?.message}</span>
-                </form>
+                
                 <datalist id="times_list">
                     <option value="06:00" />
                     <option value="07:00" />
@@ -240,22 +240,21 @@ const Form = ()=>{
 
                 </datalist>
                 <br />
-            </div> 
-
-            <div className="results flexItem">
+                
                 <h3>Calculate Hours </h3>
                 <p id="hours_worked">Hours Worked: {data.hoursWorked}h {data.minutesWorked}m | {data.totalWorkHours} hours</p>
                 <p id="total_breaks">Total Breaks: {data.hoursOnBreak}h {data.minutesOnBreak}m | {data.totalBreakHours} hours</p>
                 <p id="total_breaks">Total Hour:  {data.actualWorkingHour} hours</p>
                 {/* <p id="gross_pay">Gross Pay: ${data.totalAmount}</p> */}
-                
+                <button type="submit"  id ="signup" value="Register" >Submit</button>
+                </form>
+            </div> 
 
-                <button onClick={handleSubmit(PostData)}>
-                    Submit
-                </button>
+          
+
+           
+               
                 
-                <br /><br />
-            </div>
           </>
       )
 
