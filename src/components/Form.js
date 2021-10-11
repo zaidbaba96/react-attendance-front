@@ -24,6 +24,10 @@ const Form = ()=>{
     const isSameOrBefore = (startTime, endTime) => {
         return moment(startTime, 'HH:mm').isSameOrBefore(moment(endTime, 'HH:mm'));
       }
+
+    const isSameOrBefore1 = (start_break, end_break) => {
+      return moment(start_break, 'HH:mm').isSameOrBefore(moment(end_break, 'HH:mm'));
+    }
       
     const validationSchema = Yup.object().shape({
 
@@ -61,8 +65,8 @@ const Form = ()=>{
               "start_break_test",
               "Start Break time must be before end break",
               function(value) {
-                const { end_time } = this.parent;
-                return isSameOrBefore(value, end_time);
+                const { end_break } = this.parent;
+                return isSameOrBefore1(value, end_break);
               }
             ),
         end_break: Yup.string()
