@@ -77,9 +77,9 @@ const Form = ()=>{
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
  
-    const PostData = async (e)=>{
+    const PostData = async ()=>{
 
-        e.preventDefault();
+      
     
         const {name , start_time , start_break , end_break , end_time} = empData
         const IndDate = moment(empData.Date).format('DD/MM/YYYY');
